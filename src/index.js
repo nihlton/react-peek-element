@@ -92,10 +92,13 @@ const PeekElement = function (props) {
         }
         child.setAttribute('class', window.scrollY === 0 ? '' : 'scrolling-up')
       }
-  
-      usePlaceHolder && window.requestAnimationFrame(() => {
-        placeHolderRef.current.style.width = grandChild.offsetWidth + 'px'
-        placeHolderRef.current.style.height = grandChild.offsetHeight + 'px'
+
+      window.requestAnimationFrame(() => {
+        child.style.width = parent.offsetWidth + 'px'
+        if (usePlaceHolder) {
+          placeHolderRef.current.style.width = grandChild.offsetWidth + 'px'
+          placeHolderRef.current.style.height = grandChild.offsetHeight + 'px'
+        }
       })
     })
   }

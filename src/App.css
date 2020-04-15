@@ -1,0 +1,26 @@
+html, body {
+    min-height: 100%;
+}
+
+.App {
+    max-width: 70rem;
+    margin: auto;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+header {
+    background: #eee;
+    padding: 1rem;
+}
+
+.main-content {
+    padding: 2rem;
+    flex-grow: 1;
+}
+
+footer {
+    height: 15rem;
+    background: #eee;
+}

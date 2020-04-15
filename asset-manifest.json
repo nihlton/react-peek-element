@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/react-peek-element/static/css/main.cd60eaa7.chunk.css",
+    "main.js": "/react-peek-element/static/js/main.b1a383e0.chunk.js",
+    "main.js.map": "/react-peek-element/static/js/main.b1a383e0.chunk.js.map",
+    "runtime-main.js": "/react-peek-element/static/js/runtime-main.e01c99ac.js",
+    "runtime-main.js.map": "/react-peek-element/static/js/runtime-main.e01c99ac.js.map",
+    "static/js/2.42703d9a.chunk.js": "/react-peek-element/static/js/2.42703d9a.chunk.js",
+    "static/js/2.42703d9a.chunk.js.map": "/react-peek-element/static/js/2.42703d9a.chunk.js.map",
+    "index.html": "/react-peek-element/index.html",
+    "precache-manifest.d778c1666aabccb4214ed1015e65f7ce.js": "/react-peek-element/precache-manifest.d778c1666aabccb4214ed1015e65f7ce.js",
+    "service-worker.js": "/react-peek-element/service-worker.js",
+    "static/css/main.cd60eaa7.chunk.css.map": "/react-peek-element/static/css/main.cd60eaa7.chunk.css.map",
+    "static/js/2.42703d9a.chunk.js.LICENSE.txt": "/react-peek-element/static/js/2.42703d9a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e01c99ac.js",
+    "static/js/2.42703d9a.chunk.js",
+    "static/css/main.cd60eaa7.chunk.css",
+    "static/js/main.b1a383e0.chunk.js"
+  ]
+}

@@ -23,3 +23,17 @@ or
 ```
 
 * **usePlaceHolder** - (optional) will create a statically positioned element to maintain the document flow while the element is absolutely positionined.
+
+**Notes:**
+
+* The parent element will have convenience classes applied while scrolling, so you can restyle your element as needed.
+  - scrolling-up
+  - scrolling-down
+
+```css
+	.my-element { box-shadow: none; }
+	.scrolling-up .my-element,
+	.scrolling-down .my-element {
+		box-shadow: 0 1rem 3rem #0001, 0 0 .5rem #0002;
+	}
+```

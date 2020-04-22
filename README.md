@@ -1,3 +1,5 @@
+![React Peek Element](https://repository-images.githubusercontent.com/255969830/7bbc4000-847b-11ea-8bd1-fb940207482c)
+
 # React Peek Element [BETA]
 Allow a UI element to scroll off screen as the user scrolls down, but as soon as the user scrolls up, begin revealing the element.
 

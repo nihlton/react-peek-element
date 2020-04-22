@@ -1,5 +1,5 @@
 # React Peek Element [BETA]
-Pin an absolutely positioned element in place as the user scrolls down, but as soon as the user scrolls up, begin revealing the element.
+Allow a UI element to scroll off screen as the user scrolls down, but as soon as the user scrolls up, begin revealing the element.
 
 Useful for navigation and other persistent elements which we want highly available, but to not consume screen realestate until needed.
 

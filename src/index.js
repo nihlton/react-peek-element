@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { elementInViewport, elementPartiallyInViewport } from './util'
 
 const SCROLLING_UP = 0
@@ -24,6 +24,7 @@ const PeekElement = function (props) {
   let scrollDirection
   let visibilityState
   
+  useLayoutEffect(() => positionChild(), [ childRef ])
   useEffect(() => {
     window.addEventListener('scroll', handleScrollAction)
     window.addEventListener('resize', handleScrollAction)

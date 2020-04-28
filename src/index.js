@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
-import { elementInViewport, elementPartiallyInViewport } from './util'
+import ResizeObserver from 'resize-observer-polyfill'
 
 const SCROLLING_UP = 0
 const SCROLLING_DOWN = 1
@@ -26,27 +26,37 @@ const PeekElement = function (props) {
   
   useLayoutEffect(() => positionChild(), [ childRef ])
   useEffect(() => {
+    const containerNode = containerRef.current
+    const mutationConfig = { childList: true, subtree: true }
+    const sizeObserver = new ResizeObserver(handleScrollAction)
+    const domObserver = new MutationObserver(handleScrollAction)
+    sizeObserver.observe(containerNode)
+    domObserver.observe(containerNode, mutationConfig)
+    
     window.addEventListener('scroll', handleScrollAction)
     window.addEventListener('resize', handleScrollAction)
     positionChild()
     
     return () => {
-      visibleObserver.disconnect()
+      sizeObserver.disconnect()
+      domObserver.disconnect()
       window.removeEventListener('scroll', handleScrollAction)
       window.removeEventListener('resize', handleScrollAction)
     }
-  }, [ ])
+  }, [ containerRef ])
   
   const handleScrollAction = () => {
     const child = childRef.current
-    const grandChild = child.firstElementChild
-    const partially = elementPartiallyInViewport(grandChild)
-    const entirely = elementInViewport(grandChild)
+    const childRect = child.getBoundingClientRect()
+    const partially = childRect.top < 0 && (Math.abs(childRect.top) < childRect.height)
+    const entirely = childRect.top > -1
     if (lastScrollPosition > window.scrollY) { scrollDirection = SCROLLING_UP }
     if (lastScrollPosition < window.scrollY) { scrollDirection = SCROLLING_DOWN }
     if (partially) { visibilityState = PARTIALLY_VISIBLE }
     if (entirely) { visibilityState = ENTIRELY_VISIBLE }
     if (!partially && !entirely) { visibilityState = NOT_VISIBLE }
+  
+    child.style.zIndex = '4000'
     
     lastScrollPosition = window.scrollY
     positionChild()
@@ -62,8 +72,8 @@ const PeekElement = function (props) {
       const isZoomed = window.visualViewport && window.visualViewport.scale !== 1
       const child = childRef.current
       const parent = containerRef.current
-      const grandChild = child.firstElementChild
-  
+      const childRect = child.getBoundingClientRect()
+      
       
       if (!child || !parent) { return }
       if (isZoomed) {
@@ -83,7 +93,7 @@ const PeekElement = function (props) {
       if (scrollDirection === SCROLLING_UP) {
         if (visibilityState === NOT_VISIBLE) {
           child.style.position = 'absolute'
-          child.style.top = (window.scrollY - grandChild.offsetHeight + 2) + 'px'
+          child.style.top = (window.scrollY - childRect.height + 2) + 'px'
         }
         
         if (visibilityState === ENTIRELY_VISIBLE) {
@@ -97,8 +107,8 @@ const PeekElement = function (props) {
       window.requestAnimationFrame(() => {
         child.style.width = parent.offsetWidth + 'px'
         if (usePlaceHolder) {
-          placeHolderRef.current.style.width = grandChild.offsetWidth + 'px'
-          placeHolderRef.current.style.height = grandChild.offsetHeight + 'px'
+          placeHolderRef.current.style.width = childRect.width + 'px'
+          placeHolderRef.current.style.height = childRect.height + 'px'
         }
       })
     })

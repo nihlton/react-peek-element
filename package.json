@@ -1,6 +1,6 @@
 {
   "name": "react-peek-element",
-  "version": "1.0.1",
+  "version": "1.0.6",
   "description": "Present an element which scrolls off page when the user scrolls down, but immediately becomes visible when they scroll back up.",
   "homepage": "https://github.com/nihlton/react-peek-element#readme",
   "author": "Greg Archer",
@@ -17,6 +17,9 @@
   ],
   "bugs": {
     "url": "https://github.com/nihlton/react-peek-element/issues"
+  },
+  "dependencies": {
+    "resize-observer-polyfill": "^1.5.1"
   },
   "peerDependencies": {
     "react": "^16.8.6",

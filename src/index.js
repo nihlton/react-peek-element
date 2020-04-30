@@ -10,8 +10,12 @@ const ENTIRELY_VISIBLE = 2
 
 const maxStyle = { maxWidth: '100%' }
 const parentStyle = { position: 'relative', ...maxStyle }
-const childStyle = { width: '100%', position: 'absolute', ...maxStyle }
+const childStyle = { width: '100%', position: 'absolute', zIndex: '4000', ...maxStyle }
 const placeHolderStyle = { ...maxStyle }
+
+const mutationConfig = { childList: true, subtree: true }
+const SCROLLING_DOWN_CLASS = 'scrolling-down'
+const SCROLLING_UP_CLASS = 'scrolling-up'
 
 const PeekElement = function (props) {
   const containerRef = useRef()
@@ -27,25 +31,24 @@ const PeekElement = function (props) {
   useLayoutEffect(() => positionChild(), [ childRef ])
   useEffect(() => {
     const containerNode = containerRef.current
-    const mutationConfig = { childList: true, subtree: true }
-    const sizeObserver = new ResizeObserver(handleScrollAction)
-    const domObserver = new MutationObserver(handleScrollAction)
+    const sizeObserver = new ResizeObserver(handleRepositionAction)
+    const domObserver = new MutationObserver(handleRepositionAction)
     sizeObserver.observe(containerNode)
     domObserver.observe(containerNode, mutationConfig)
     
-    window.addEventListener('scroll', handleScrollAction)
-    window.addEventListener('resize', handleScrollAction)
+    window.addEventListener('scroll', handleRepositionAction)
+    window.addEventListener('resize', handleRepositionAction)
     positionChild()
     
     return () => {
       sizeObserver.disconnect()
       domObserver.disconnect()
-      window.removeEventListener('scroll', handleScrollAction)
-      window.removeEventListener('resize', handleScrollAction)
+      window.removeEventListener('scroll', handleRepositionAction)
+      window.removeEventListener('resize', handleRepositionAction)
     }
   }, [ containerRef ])
   
-  const handleScrollAction = () => {
+  const handleRepositionAction = () => {
     const child = childRef.current
     const childRect = child.getBoundingClientRect()
     const partially = childRect.top < 0 && (Math.abs(childRect.top) < childRect.height)
@@ -55,8 +58,6 @@ const PeekElement = function (props) {
     if (partially) { visibilityState = PARTIALLY_VISIBLE }
     if (entirely) { visibilityState = ENTIRELY_VISIBLE }
     if (!partially && !entirely) { visibilityState = NOT_VISIBLE }
-  
-    child.style.zIndex = '4000'
     
     lastScrollPosition = window.scrollY
     positionChild()
@@ -78,19 +79,22 @@ const PeekElement = function (props) {
       if (!child || !parent) { return }
       if (isZoomed) {
         child.style.position = 'absolute'
-        child.style.top = '0px'
+        child.style.top = '0'
         return
       }
   
       if (scrollDirection === SCROLLING_DOWN) {
+        child.setAttribute('class', SCROLLING_DOWN_CLASS)
+        
         if (window.scrollY > child.offsetTop && child.style.position === 'fixed') {
           child.style.position = 'absolute'
           child.style.top = (window.scrollY + 1) + 'px'
         }
-        child.setAttribute('class', 'scrolling-down')
       }
   
       if (scrollDirection === SCROLLING_UP) {
+        child.setAttribute('class', window.scrollY === 0 ? '' : SCROLLING_UP_CLASS)
+        
         if (visibilityState === NOT_VISIBLE) {
           child.style.position = 'absolute'
           child.style.top = (window.scrollY - childRect.height + 2) + 'px'
@@ -98,10 +102,8 @@ const PeekElement = function (props) {
         
         if (visibilityState === ENTIRELY_VISIBLE) {
           child.style.position = 'fixed'
-          child.style.top = '0px'
-          child.style.zIndex = '33'
+          child.style.top = '0'
         }
-        child.setAttribute('class', window.scrollY === 0 ? '' : 'scrolling-up')
       }
 
       window.requestAnimationFrame(() => {

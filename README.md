@@ -5,7 +5,7 @@ Allow a UI element to scroll off screen as the user scrolls down, but as soon as
 
 Useful for navigation and other persistent elements which we want highly available, but to not consume screen realestate until needed.
 
-live demo: https://nihlton.github.io/react-peek-element/
+[live demo](https://codesandbox.io/s/dazzling-ishizaka-n4d8y?file=/src/index.js)
 
 ## Installation
 

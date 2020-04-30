@@ -8,12 +8,12 @@ const NOT_VISIBLE = 0
 const PARTIALLY_VISIBLE = 1
 const ENTIRELY_VISIBLE = 2
 
-const maxStyle = { maxWidth: '100%' }
-const parentStyle = { position: 'relative', ...maxStyle }
-const childStyle = { width: '100%', position: 'absolute', zIndex: '4000', ...maxStyle }
-const placeHolderStyle = { ...maxStyle }
+const MAX_STYLE = { maxWidth: '100%' }
+const PARENT_STYLE = { position: 'relative', ...MAX_STYLE }
+const CHILD_STYLE = { width: '100%', position: 'absolute', zIndex: '4000', ...MAX_STYLE }
+const PLACEHOLDER_STYLE = { ...MAX_STYLE }
 
-const mutationConfig = { childList: true, subtree: true }
+const MUTATION_CONFIG = { childList: true, subtree: true }
 const SCROLLING_DOWN_CLASS = 'scrolling-down'
 const SCROLLING_UP_CLASS = 'scrolling-up'
 
@@ -34,7 +34,7 @@ const PeekElement = function (props) {
     const sizeObserver = new ResizeObserver(handleRepositionAction)
     const domObserver = new MutationObserver(handleRepositionAction)
     sizeObserver.observe(containerNode)
-    domObserver.observe(containerNode, mutationConfig)
+    domObserver.observe(containerNode, MUTATION_CONFIG)
     
     window.addEventListener('scroll', handleRepositionAction)
     window.addEventListener('resize', handleRepositionAction)
@@ -117,9 +117,9 @@ const PeekElement = function (props) {
   }
   
   return (
-    <div style={ parentStyle } ref={containerRef}>
-      <div style={childStyle} ref={childRef}>{props.children}</div>
-      {usePlaceHolder && <div ref={placeHolderRef} style={placeHolderStyle} />}
+    <div style={PARENT_STYLE} ref={containerRef}>
+      <div style={CHILD_STYLE} ref={childRef}>{props.children}</div>
+      {usePlaceHolder && <div ref={placeHolderRef} style={PLACEHOLDER_STYLE} />}
     </div>
   )
   

@@ -58,8 +58,7 @@ const PeekElement = function (props) {
     if (partially) { visibilityState = PARTIALLY_VISIBLE }
     if (entirely) { visibilityState = ENTIRELY_VISIBLE }
     if (!partially && !entirely) { visibilityState = NOT_VISIBLE }
-    
-    lastScrollPosition = window.scrollY
+  
     positionChild()
   }
   
@@ -82,13 +81,13 @@ const PeekElement = function (props) {
         child.style.top = '0'
         return
       }
-  
+      
       if (scrollDirection === SCROLLING_DOWN) {
         child.setAttribute('class', SCROLLING_DOWN_CLASS)
         
         if (window.scrollY > child.offsetTop && child.style.position === 'fixed') {
           child.style.position = 'absolute'
-          child.style.top = (window.scrollY + 1) + 'px'
+          child.style.top = (lastScrollPosition) + 'px'
         }
       }
   
@@ -113,6 +112,9 @@ const PeekElement = function (props) {
           placeHolderRef.current.style.height = childRect.height + 'px'
         }
       })
+  
+      lastScrollPosition = window.scrollY
+  
     })
   }
   

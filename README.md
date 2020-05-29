@@ -18,13 +18,15 @@ or
 ## Usage
 
 ```js
-      <PeekElement usePlaceHolder>
+      <PeekElement usePlaceHolder zIndex="1234">
         [ element ]
       </PeekElement>
 
 ```
 
 * **usePlaceHolder** - (optional) will create a statically positioned element to maintain the document flow while the element is absolutely positionined.
+
+* **zIndex** - (default: 4000) set the z-index on the outermost wrapper
 
 **Notes:**
 

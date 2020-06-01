@@ -1,5 +1,5 @@
-import React, { useEffect, useLayoutEffect, useRef } from "react"
-import ResizeObserver from "resize-observer-polyfill"
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
+import ResizeObserver from 'resize-observer-polyfill'
 
 const SCROLLING_UP = 0
 const SCROLLING_DOWN = 1
@@ -8,19 +8,19 @@ const NOT_VISIBLE = 0
 const PARTIALLY_VISIBLE = 1
 const ENTIRELY_VISIBLE = 2
 
-const MAX_STYLE = { maxWidth: "100%" }
-const PARENT_STYLE = { position: "relative", ...MAX_STYLE }
+const MAX_STYLE = { maxWidth: '100%' }
+const PARENT_STYLE = { position: 'relative', ...MAX_STYLE }
 const CHILD_STYLE = {
-  width: "100%",
-  position: "absolute",
-  zIndex: "4000",
+  width: '100%',
+  position: 'absolute',
+  zIndex: '4000',
   ...MAX_STYLE
 }
 const PLACEHOLDER_STYLE = { ...MAX_STYLE }
 
 const MUTATION_CONFIG = { childList: true, subtree: true }
-const SCROLLING_DOWN_CLASS = "scrolling-down"
-const SCROLLING_UP_CLASS = "scrolling-up"
+const SCROLLING_DOWN_CLASS = 'scrolling-down'
+const SCROLLING_UP_CLASS = 'scrolling-up'
 
 const PeekElement = function(props) {
   const containerRef = useRef()
@@ -57,8 +57,8 @@ const PeekElement = function(props) {
         return
       }
       if (isZoomed) {
-        child.style.position = "absolute"
-        child.style.top = "0"
+        child.style.position = 'absolute'
+        child.style.top = '0'
         return
       }
 
@@ -68,10 +68,10 @@ const PeekElement = function(props) {
 
         if (
           window.scrollY > child.offsetTop &&
-          child.style.position === "fixed"
+          child.style.position === 'fixed'
         ) {
-          child.style.position = "absolute"
-          child.style.top = lastScrollPosition.current + "px"
+          child.style.position = 'absolute'
+          child.style.top = lastScrollPosition.current + 'px'
         }
       }
 
@@ -84,21 +84,21 @@ const PeekElement = function(props) {
         }
 
         if (visibilityState.current === NOT_VISIBLE) {
-          child.style.position = "absolute"
-          child.style.top = window.scrollY - childRect.height + 2 + "px"
+          child.style.position = 'absolute'
+          child.style.top = window.scrollY - childRect.height + 2 + 'px'
         }
 
         if (visibilityState.current === ENTIRELY_VISIBLE) {
-          child.style.position = "fixed"
-          child.style.top = "0"
+          child.style.position = 'fixed'
+          child.style.top = '0'
         }
       }
 
       animationFrameSecondary.current = window.requestAnimationFrame(() => {
-        child.style.width = parent.offsetWidth + "px"
+        child.style.width = parent.offsetWidth + 'px'
         if (usePlaceHolder) {
-          placeHolderRef.current.style.width = childRect.width + "px"
-          placeHolderRef.current.style.height = childRect.height + "px"
+          placeHolderRef.current.style.width = childRect.width + 'px'
+          placeHolderRef.current.style.height = childRect.height + 'px'
         }
       })
 
@@ -140,8 +140,8 @@ const PeekElement = function(props) {
     sizeObserver.observe(containerNode)
     domObserver.observe(containerNode, MUTATION_CONFIG)
 
-    window.addEventListener("scroll", handleRepositionAction)
-    window.addEventListener("resize", handleRepositionAction)
+    window.addEventListener('scroll', handleRepositionAction)
+    window.addEventListener('resize', handleRepositionAction)
     positionChild()
 
     return () => {
@@ -153,8 +153,8 @@ const PeekElement = function(props) {
       }
       sizeObserver.disconnect()
       domObserver.disconnect()
-      window.removeEventListener("scroll", handleRepositionAction)
-      window.removeEventListener("resize", handleRepositionAction)
+      window.removeEventListener('scroll', handleRepositionAction)
+      window.removeEventListener('resize', handleRepositionAction)
     }
   }, [containerRef, handleRepositionAction, positionChild])
   

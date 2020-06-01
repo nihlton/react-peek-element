@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useCallback } from 'react'
 import ResizeObserver from 'resize-observer-polyfill'
 
 const SCROLLING_UP = 0
@@ -38,7 +38,7 @@ const PeekElement = function(props) {
   const animationFrameMain = React.useRef()
   const animationFrameSecondary = React.useRef()
 
-  const positionChild = React.useCallback(() => {
+  const positionChild = useCallback(() => {
     if (alreadyHandling.current) {
       return
     }
@@ -107,7 +107,7 @@ const PeekElement = function(props) {
     })
   }, [usePlaceHolder, visibilityState])
 
-  const handleRepositionAction = React.useCallback(() => {
+  const handleRepositionAction = useCallback(() => {
     const child = childRef.current
     const childRect = child.getBoundingClientRect()
     const partially =

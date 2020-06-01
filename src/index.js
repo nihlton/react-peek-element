@@ -21,7 +21,9 @@ const PeekElement = function (props) {
   const containerRef = useRef()
   const childRef = useRef()
   const placeHolderRef = useRef()
-  const { usePlaceHolder, zIndex = CHILD_STYLE.zIndex } = props
+  const { usePlaceHolder, config } = props
+  
+  const { childProps, parentProps, placeHolderProps } = config || {}
   
   let alreadyHandling
   let lastScrollPosition
@@ -83,7 +85,9 @@ const PeekElement = function (props) {
       }
       
       if (scrollDirection === SCROLLING_DOWN) {
-        child.setAttribute('class', SCROLLING_DOWN_CLASS)
+        child.classList.add(SCROLLING_DOWN_CLASS)
+        child.classList.remove(SCROLLING_UP_CLASS)
+
         
         if (window.scrollY > child.offsetTop && child.style.position === 'fixed') {
           child.style.position = 'absolute'
@@ -92,7 +96,12 @@ const PeekElement = function (props) {
       }
   
       if (scrollDirection === SCROLLING_UP) {
-        child.setAttribute('class', window.scrollY === 0 ? '' : SCROLLING_UP_CLASS)
+        child.classList.add(SCROLLING_UP_CLASS)
+        child.classList.remove(SCROLLING_DOWN_CLASS)
+        
+        if (window.scrollY === 0 ) {
+          child.classList.remove(SCROLLING_UP_CLASS)
+        }
         
         if (visibilityState === NOT_VISIBLE) {
           child.style.position = 'absolute'
@@ -114,14 +123,18 @@ const PeekElement = function (props) {
       })
   
       lastScrollPosition = window.scrollY
-  
+      
     })
   }
   
+  const parentStyle = { ...PARENT_STYLE, ...(parentProps?.style || {}) }
+  const childStyle = { ...CHILD_STYLE, ...(childProps?.style || {}) }
+  const placeHolderStyle = { ...PLACEHOLDER_STYLE, ...(placeHolderProps?.style || {}) }
+  
   return (
-    <div style={PARENT_STYLE} ref={containerRef}>
-      <div style={{...CHILD_STYLE, zIndex}} ref={childRef}>{props.children}</div>
-      {usePlaceHolder && <div ref={placeHolderRef} style={PLACEHOLDER_STYLE} />}
+    <div ref={containerRef} {...parentProps} style={parentStyle} >
+      <div ref={childRef} {...childProps} style={childStyle} >{props.children}</div>
+      {usePlaceHolder && <div ref={placeHolderRef} {...placeHolderProps} style={placeHolderStyle} />}
     </div>
   )
   

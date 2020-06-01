@@ -32,6 +32,8 @@ const PeekElement = function(props) {
   const lastScrollPosition = React.useRef()
   const scrollDirection = React.useRef()
   const visibilityState = React.useRef()
+  const animationFrameMain = React.useRef()
+  const animationFrameSecondary = React.useRef()
 
   const positionChild = React.useCallback(() => {
     if (alreadyHandling.current) {
@@ -39,7 +41,7 @@ const PeekElement = function(props) {
     }
     alreadyHandling.current = true
 
-    window.requestAnimationFrame(() => {
+    animationFrameMain.current = window.requestAnimationFrame(() => {
       alreadyHandling.current = false
 
       const isZoomed =
@@ -86,7 +88,7 @@ const PeekElement = function(props) {
         }
       }
 
-      window.requestAnimationFrame(() => {
+      animationFrameSecondary.current = window.requestAnimationFrame(() => {
         child.style.width = parent.offsetWidth + "px"
         if (usePlaceHolder) {
           placeHolderRef.current.style.width = childRect.width + "px"
@@ -136,6 +138,12 @@ const PeekElement = function(props) {
     positionChild()
 
     return () => {
+      if (animationFrameMain.current) {
+        cancelAnimationFrame(animationFrameMain.current)
+      }
+      if (animationFrameSecondary.current) {
+        cancelAnimationFrame(animationFrameSecondary.current)
+      }
       sizeObserver.disconnect()
       domObserver.disconnect()
       window.removeEventListener("scroll", handleRepositionAction)

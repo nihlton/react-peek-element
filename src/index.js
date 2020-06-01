@@ -103,6 +103,7 @@ const PeekElement = function(props) {
       })
 
       lastScrollPosition.current = window.scrollY
+
     })
   }, [usePlaceHolder, visibilityState])
 
@@ -157,6 +158,10 @@ const PeekElement = function(props) {
     }
   }, [containerRef, handleRepositionAction, positionChild])
 
+  const parentStyle = { ...PARENT_STYLE, ...(parentProps?.style || {}) }
+  const childStyle = { ...CHILD_STYLE, ...(childProps?.style || {}) }
+  const placeHolderStyle = { ...PLACEHOLDER_STYLE, ...(placeHolderProps?.style || {}) }
+  
   const parentStyle = { ...PARENT_STYLE, ...(parentProps?.style || {}) }
   const childStyle = { ...CHILD_STYLE, ...(childProps?.style || {}) }
   const placeHolderStyle = { ...PLACEHOLDER_STYLE, ...(placeHolderProps?.style || {}) }

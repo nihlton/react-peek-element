@@ -26,12 +26,15 @@ const PeekElement = function(props) {
   const containerRef = useRef()
   const childRef = useRef()
   const placeHolderRef = useRef()
+  const { usePlaceHolder, config } = props
+  
   const { childProps, parentProps, placeHolderProps } = config || {}
 
   const alreadyHandling = React.useRef()
   const lastScrollPosition = React.useRef()
   const scrollDirection = React.useRef()
   const visibilityState = React.useRef()
+
   const animationFrameMain = React.useRef()
   const animationFrameSecondary = React.useRef()
 

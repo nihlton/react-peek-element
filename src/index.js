@@ -157,10 +157,6 @@ const PeekElement = function(props) {
       window.removeEventListener("resize", handleRepositionAction)
     }
   }, [containerRef, handleRepositionAction, positionChild])
-
-  const parentStyle = { ...PARENT_STYLE, ...(parentProps?.style || {}) }
-  const childStyle = { ...CHILD_STYLE, ...(childProps?.style || {}) }
-  const placeHolderStyle = { ...PLACEHOLDER_STYLE, ...(placeHolderProps?.style || {}) }
   
   const parentStyle = { ...PARENT_STYLE, ...(parentProps?.style || {}) }
   const childStyle = { ...CHILD_STYLE, ...(childProps?.style || {}) }

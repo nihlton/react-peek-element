@@ -26,7 +26,7 @@ const PeekElement = function(props) {
   const containerRef = useRef()
   const childRef = useRef()
   const placeHolderRef = useRef()
-  const { usePlaceHolder, zIndex = CHILD_STYLE.zIndex } = props
+  const { childProps, parentProps, placeHolderProps } = config || {}
 
   const alreadyHandling = React.useRef()
   const lastScrollPosition = React.useRef()
@@ -60,7 +60,8 @@ const PeekElement = function(props) {
       }
 
       if (scrollDirection.current === SCROLLING_DOWN) {
-        child.setAttribute("class", SCROLLING_DOWN_CLASS)
+        child.classList.add(SCROLLING_DOWN_CLASS)
+        child.classList.remove(SCROLLING_UP_CLASS)
 
         if (
           window.scrollY > child.offsetTop &&
@@ -72,10 +73,12 @@ const PeekElement = function(props) {
       }
 
       if (scrollDirection.current === SCROLLING_UP) {
-        child.setAttribute(
-          "class",
-          window.scrollY === 0 ? "" : SCROLLING_UP_CLASS
-        )
+        child.classList.add(SCROLLING_UP_CLASS)
+        child.classList.remove(SCROLLING_DOWN_CLASS)
+
+        if (window.scrollY === 0 ) {
+          child.classList.remove(SCROLLING_UP_CLASS)
+        }
 
         if (visibilityState.current === NOT_VISIBLE) {
           child.style.position = "absolute"
@@ -151,12 +154,14 @@ const PeekElement = function(props) {
     }
   }, [containerRef, handleRepositionAction, positionChild])
 
+  const parentStyle = { ...PARENT_STYLE, ...(parentProps?.style || {}) }
+  const childStyle = { ...CHILD_STYLE, ...(childProps?.style || {}) }
+  const placeHolderStyle = { ...PLACEHOLDER_STYLE, ...(placeHolderProps?.style || {}) }
+  
   return (
-    <div style={PARENT_STYLE} ref={containerRef}>
-      <div style={{ ...CHILD_STYLE, zIndex }} ref={childRef}>
-        {props.children}
-      </div>
-      {usePlaceHolder && <div ref={placeHolderRef} style={PLACEHOLDER_STYLE} />}
+    <div ref={containerRef} {...parentProps} style={parentStyle} >
+      <div ref={childRef} {...childProps} style={childStyle} >{props.children}</div>
+      {usePlaceHolder && <div ref={placeHolderRef} {...placeHolderProps} style={placeHolderStyle} />}
     </div>
   )
 }

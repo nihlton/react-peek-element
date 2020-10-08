@@ -113,10 +113,12 @@ const PeekElement = function(props) {
     const partially =
       childRect.top < 0 && Math.abs(childRect.top) < childRect.height
     const entirely = childRect.top > -1
-    if (lastScrollPosition.current > window.scrollY) {
+    const lastScrollPositionCapped = Math.max(0, lastScrollPosition.current)
+    const scrollTop = Math.max(0, window.scrollY)
+    if (lastScrollPositionCapped > window.scrollY) {
       scrollDirection.current = SCROLLING_UP
     }
-    if (lastScrollPosition.current < window.scrollY) {
+    if (lastScrollPositionCapped < window.scrollY) {
       scrollDirection.current = SCROLLING_DOWN
     }
     if (partially) {

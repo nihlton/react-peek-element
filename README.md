@@ -18,21 +18,22 @@ or
 ## Usage
 
 ```js
-      <PeekElement usePlaceHolder config={ [config Object] }>
+      <PeekElement config={ [config Object] }>
         [ element ]
       </PeekElement>
 
 ```
-
-* **usePlaceHolder** - (optional) will create a statically positioned element to maintain the document flow while the element is absolutely positionined.
-* **config** - (optional) object containing three entries: `parentProps`, `childProps`, `placeHolderProps`.  The entry values will be spread into the respective elements.  Apply classNames, styles, event handlers etc. **Use with caution**.
+* **config** - (optional) object containing: 
+  - `sizeListener` - will receive a bounding rect when the dimensions or scroll position of the element changes.
+  - `parentProps`, `childProps`, `placeHolderProps` - Entry values will be spread into the respective elements.  Apply classNames, styles, event handlers etc. **Use with caution**.
 
 **Notes:**
 
 * The element wrapping your child element will have convenience classes applied while scrolling, so you can restyle your element as needed.
   - scrolling-up
   - scrolling-down
-
+  - *To do: make these configurable.*
+  
 ```css
 	.my-element { box-shadow: none; }
 	.scrolling-up .my-element,

@@ -18,7 +18,7 @@ or
 ## Usage
 
 ```js
-      <PeekElement config={ [config Object] }>
+      <PeekElement config={ [config] }>
         [ element ]
       </PeekElement>
 
@@ -26,6 +26,17 @@ or
 * **config** - (optional) object containing: 
   - `sizeListener` - will receive a bounding rect when the dimensions or scroll position of the element changes.
   - `parentProps`, `childProps`, `placeHolderProps` - Entry values will be spread into the respective elements.  Apply classNames, styles, event handlers etc. **Use with caution**.
+
+## Alt  Usage
+
+```js
+      <PeekElement config={ [config] }>
+        ({hide, show}) => [ element ]
+      </PeekElement>
+
+```
+* **{hide, show}** - Alternatively, children can be passed as a function which accepts an object containing two methods - `hide`, and `show`.  Should the wrapped element need to change its visibility, it can call `show()` or `hide()`
+
 
 **Notes:**
 

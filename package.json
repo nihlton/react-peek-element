@@ -21,16 +21,30 @@
   "dependencies": {
     "resize-observer-polyfill": "^1.5.1"
   },
+  "eslintConfig": {
+    "plugins": [
+      "react-hooks"
+    ],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      "comma-dangle": [
+        "error",
+        "always-multiline"
+      ]
+    }
+  },
   "peerDependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
   "scripts": {
     "start": "webpack --watch",
+    "lint": "standardx src/**.*",
+    "lint-fix": "standardx --fix src/**.*",
     "build": "webpack"
   },
   "devDependencies": {
-    "webpack": "^4.35.0",
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
@@ -40,7 +54,10 @@
     "@babel/preset-react": "^7.0.0",
     "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.6",
+    "eslint-plugin-react-hooks": "^4.1.2",
     "html-webpack-plugin": "^3.2.0",
+    "standardx": "^5.0.0",
+    "webpack": "^4.35.0",
     "webpack-cli": "^3.0.4"
   }
 }

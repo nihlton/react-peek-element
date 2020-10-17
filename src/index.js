@@ -33,6 +33,7 @@ const PeekElement = function (props) {
   const scrollDelta = React.useRef(0)
   const childTop = React.useRef(0)
   const childHeight = React.useRef(0)
+  const childWidth = React.useRef(0)
   
   const handleRepositionAction = useCallback(() => {
     if (inProcess.current) { return }
@@ -73,13 +74,14 @@ const PeekElement = function (props) {
     
     lastScrollPosition.current = window.scrollY
     
-    const dimensionsChanged = (parentRect.width !== childRect.width || childHeight.current !== childRect.height)
+    const dimensionsChanged = (childWidth.current !== parentRect.width || childHeight.current !== childRect.height)
     
     if (dimensionsChanged) {
       placeHolderRef.current.style.width = parentRect.width + 'px'
       placeHolderRef.current.style.height = childRect.height + 'px'
       childRef.current.style.width = parentRect.width + 'px'
-      childHeight.current = childRect.height + 'px'
+      childHeight.current = childRect.height
+      childWidth.current = parentRect.width
     }
     
     sizeListener(childRect)

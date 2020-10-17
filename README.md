@@ -19,21 +19,20 @@ or
 
 ```js
       <PeekElement config={ [config] }>
-        [ element ]
+        [children]
       </PeekElement>
-
 ```
 * **config** - (optional) object containing: 
   - `sizeListener` - will receive a bounding rect when the dimensions or scroll position of the element changes.
   - `parentProps`, `childProps`, `placeHolderProps` - Entry values will be spread into the respective elements.  Apply classNames, styles, event handlers etc. **Use with caution**.
+  - `revealDuration` - If you're using the alt usage (See below), this determines the animation length in milliseconds.
 
 ## Alt  Usage
 
 ```js
       <PeekElement config={ [config] }>
-        ({hide, show}) => [ element ]
+        ({hide, show}) => [children]
       </PeekElement>
-
 ```
 * **{hide, show}** - Alternatively, children can be passed as a function which accepts an object containing two methods - `hide`, and `show`.  Should the wrapped element need to change its visibility, it can call `show()` or `hide()`
 

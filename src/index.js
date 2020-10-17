@@ -46,16 +46,21 @@ const PeekElement = function (props) {
     
     // scrolling up
     if (lastScrollPosition.current > window.scrollY) {
-      child.classList.add(SCROLLING_DOWN_CLASS)
-      child.classList.remove(SCROLLING_UP_CLASS)
+      child.classList.add(SCROLLING_UP_CLASS)
+      child.classList.remove(SCROLLING_DOWN_CLASS)
       newChildTop += scrollDelta.current
     }
     
     // scrolling down
     if (lastScrollPosition.current < window.scrollY) {
-      child.classList.add(SCROLLING_UP_CLASS)
-      child.classList.remove(SCROLLING_DOWN_CLASS)
+      child.classList.add(SCROLLING_DOWN_CLASS)
+      child.classList.remove(SCROLLING_UP_CLASS)
       newChildTop -= scrollDelta.current
+    }
+    
+    if (window.scrollY === 0) {
+      child.classList.remove(SCROLLING_UP_CLASS)
+      child.classList.remove(SCROLLING_DOWN_CLASS)
     }
     
     newChildTop = Math.min(0, Math.max(-childRect.height, newChildTop))

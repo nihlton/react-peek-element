@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useCallback } from 'react'
 import ResizeObserver from 'resize-observer-polyfill'
-import { PARENT_STYLE, CHILD_STYLE, PLACEHOLDER_STYLE, SCROLLING_DOWN_CLASS, SCROLLING_UP_CLASS } from './constants'
+import {
+  PARENT_STYLE, CHILD_STYLE, PLACEHOLDER_STYLE,
+  SCROLLING_DOWN_CLASS, SCROLLING_UP_CLASS, MUTATION_CONFIG
+} from './constants'
 
 const PeekElement = function (props) {
   const { config } = props
@@ -69,9 +72,10 @@ const PeekElement = function (props) {
   }, [sizeListener])
 
   useEffect(() => {
-    const containerNode = containerRef.current
+    const childNode = childRef.current
     const sizeObserver = new ResizeObserver(handleRepositionAction)
-    sizeObserver.observe(containerNode)
+    sizeObserver.observe(childNode)
+
     window.addEventListener('scroll', handleRepositionAction)
     window.addEventListener('resize', handleRepositionAction)
     handleRepositionAction()
@@ -81,7 +85,7 @@ const PeekElement = function (props) {
       window.removeEventListener('scroll', handleRepositionAction)
       window.removeEventListener('resize', handleRepositionAction)
     }
-  }, [containerRef, handleRepositionAction])
+  }, [childRef, handleRepositionAction])
 
   const animateTo = (to) => {
     const child = childRef?.current

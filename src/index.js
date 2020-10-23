@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useCallback } from 'react'
 import ResizeObserver from 'resize-observer-polyfill'
 import {
   PARENT_STYLE, CHILD_STYLE, PLACEHOLDER_STYLE,
-  SCROLLING_DOWN_CLASS, SCROLLING_UP_CLASS, MUTATION_CONFIG
+  SCROLLING_DOWN_CLASS, SCROLLING_UP_CLASS,
 } from './constants'
 
 const PeekElement = function (props) {
@@ -17,12 +17,9 @@ const PeekElement = function (props) {
   const childHeight = React.useRef(0)
   const childWidth = React.useRef(0)
   const childTop = React.useRef(0)
-  const inProcess = React.useRef(false)
   const lastScrollPosition = React.useRef(window.scrollY)
 
   const handleRepositionAction = useCallback(() => {
-    if (inProcess.current) { return }
-    inProcess.current = true
 
     const child = childRef.current
     const childRect = child.getBoundingClientRect()
@@ -68,7 +65,7 @@ const PeekElement = function (props) {
 
     lastScrollPosition.current = window.scrollY
     sizeListener(childRect)
-    inProcess.current = false
+
   }, [sizeListener])
 
   useEffect(() => {

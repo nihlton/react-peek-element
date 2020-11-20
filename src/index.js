@@ -24,11 +24,12 @@ const PeekElement = function (props) {
     const child = childRef.current
     const childRect = child.getBoundingClientRect()
     const parentRect = containerRef.current.getBoundingClientRect()
-    const scrollingUp = lastScrollPosition.current > window.scrollY
-    const scrollingDown = lastScrollPosition.current < window.scrollY
+    const scrollY = Math.max(0, window.scrollY)
+    const scrollingUp = lastScrollPosition.current > scrollY
+    const scrollingDown = lastScrollPosition.current < scrollY
     let newClass, oldClass, newChildTop = childTop.current
 
-    scrollDelta.current = Math.abs(lastScrollPosition.current - window.scrollY)
+    scrollDelta.current = Math.abs(lastScrollPosition.current - Math.max(0, scrollY))
 
     if (scrollingUp) {
       newClass = SCROLLING_UP_CLASS
@@ -40,7 +41,7 @@ const PeekElement = function (props) {
       newChildTop -= scrollDelta.current
     }
 
-    if (window.scrollY === 0) {
+    if (scrollY === 0) {
       oldClass = SCROLLING_UP_CLASS
     }
 
@@ -63,7 +64,7 @@ const PeekElement = function (props) {
       childWidth.current = parentRect.width
     }
 
-    lastScrollPosition.current = window.scrollY
+    lastScrollPosition.current = scrollY
     sizeListener(childRect)
 
   }, [sizeListener])

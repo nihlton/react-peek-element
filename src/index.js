@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react'
+import React, { useLayoutEffect, useRef, useCallback } from 'react'
 import ResizeObserver from 'resize-observer-polyfill'
 import {
   PARENT_STYLE, CHILD_STYLE, PLACEHOLDER_STYLE,
@@ -20,6 +20,8 @@ const PeekElement = function (props) {
   const lastScrollPosition = React.useRef(window.scrollY)
 
   const handleRepositionAction = useCallback(() => {
+
+    if (!childRef.current || !containerRef.current) return
 
     const child = childRef.current
     const childRect = child.getBoundingClientRect()
@@ -69,7 +71,7 @@ const PeekElement = function (props) {
 
   }, [sizeListener])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const childNode = childRef.current
     const sizeObserver = new ResizeObserver(handleRepositionAction)
     sizeObserver.observe(childNode)
@@ -83,7 +85,7 @@ const PeekElement = function (props) {
       window.removeEventListener('scroll', handleRepositionAction)
       window.removeEventListener('resize', handleRepositionAction)
     }
-  }, [childRef, handleRepositionAction])
+  }, [handleRepositionAction])
 
   const animateTo = (to) => {
     const child = childRef?.current

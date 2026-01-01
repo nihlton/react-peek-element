@@ -1,11 +1,10 @@
 {
   "name": "react-peek-element",
-  "version": "2.0.11",
+  "version": "3.0.4",
   "description": "Present an element which scrolls off page when the user scrolls down, but immediately becomes visible when they scroll back up.",
   "homepage": "https://github.com/nihlton/react-peek-element#readme",
   "author": "Greg Archer",
   "license": "MIT",
-  "main": "build/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nihlton/react-peek-element.git"
@@ -15,51 +14,46 @@
     "header",
     "peek"
   ],
-  "bugs": {
-    "url": "https://github.com/nihlton/react-peek-element/issues"
-  },
-  "dependencies": {
-    "resize-observer-polyfill": "^1.5.1"
-  },
-  "eslintConfig": {
-    "plugins": [
-      "react-hooks",
-      "react"
-    ],
-    "rules": {
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn",
-      "comma-dangle": [
-        "error",
-        "always-multiline"
-      ]
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/react-peek-element.umd.js",
+  "module": "./dist/react-peek-element.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/react-peek-element.mjs",
+      "require": "./dist/react-peek-element.umd.js"
     }
   },
   "peerDependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": ">=16.8.6",
+    "react-dom": ">=16.8.6"
   },
+  "dependencies": {},
   "scripts": {
-    "start": "webpack --watch",
-    "lint": "standardx src/**.*",
-    "lint-fix": "standardx --fix src/**.*",
-    "build": "webpack"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
-    "@babel/plugin-transform-react-jsx": "^7.3.0",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/preset-es2015": "^7.0.0-beta.53",
-    "@babel/preset-react": "^7.0.0",
-    "babel-cli": "^6.26.0",
-    "babel-loader": "^8.0.6",
-    "eslint-plugin-react": "^7.21.4",
-    "eslint-plugin-react-hooks": "^4.1.2",
-    "html-webpack-plugin": "^3.2.0",
-    "standardx": "^5.0.0",
-    "webpack": "^4.35.0",
-    "webpack-cli": "^3.0.4"
+    "@types/node": "^25.0.3",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "eslint": "^9.39.2",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "sass": "^1.95.1",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^7.0.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.50.1",
+    "vite": "^6.4.1",
+    "vite-plugin-dts": "^4.5.4"
   }
 }

@@ -1,3 +1,15 @@
+## Update
+
+Check out the new and improved vanilla-js re-write of this component:  [sticky-polite](https://github.com/nihlton/sticky-polite)
+
+  - Full compatibility with React (and Vue, Svelte etc)
+  - Zero mount/unmount logic.  Just add a class, and one line of CSS
+    - `<header class="sticky-polite" style="top: 1em">..`
+  - Support for all four edge (stick to the top, bottom, left, or right)
+  - Support for nested scrolling containers.
+
+----
+
 ![React Peek Element](https://repository-images.githubusercontent.com/255969830/7bbc4000-847b-11ea-8bd1-fb940207482c)
 
 # React Peek Element [BETA]
